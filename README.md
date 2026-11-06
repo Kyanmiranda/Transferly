@@ -1,6 +1,27 @@
 # Transferly
 Ivey NVP repo
 
+## Windows desktop app
+
+Built downloads are in `release/`:
+
+- `Transferly-Setup-1.0.0.exe`: installs Transferly for your Windows account, with an installation-folder choice and desktop shortcut.
+- `Transferly-Portable-1.0.0.exe`: runs without installation.
+
+These are unsigned Windows x64 builds; Windows may show an unknown-publisher warning. No signing certificate or automatic updates are configured.
+
+To rebuild from the repository root (Node.js 22.12+):
+
+```powershell
+npm.cmd ci
+npm.cmd --prefix 'lovable code/95fa4b77-3d3f-417a-bc20-55f070b89044' ci --legacy-peer-deps
+npm.cmd run dist
+```
+
+`npm.cmd start` builds and opens the desktop app. `npm.cmd run pack` creates an unpacked application. After building, `npm.cmd run test:desktop` runs a hidden Electron check of dashboard rendering, navigation, bundled PDF templates, and local storage.
+
+The Electron renderer uses the same frontend routes and bundles only compiled app assets and the four blank forms. It runs without a development server, with Node integration disabled and Chromium sandboxing enabled. The desktop build has its own static Vite entry; the existing Lovable/web build remains available. Document scanning still requires internet access to download OCR assets. Uploaded documents remain in memory; dashboard changes use the app's own local storage.
+
 The application is in `lovable code/95fa4b77-3d3f-417a-bc20-55f070b89044`.
 
 ```powershell

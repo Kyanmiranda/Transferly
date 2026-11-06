@@ -1,0 +1,29 @@
+{
+  "name": "transferly-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Transferly desktop document preparation",
+  "author": "Transferly",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "build:renderer": "npm --prefix \"lovable code/95fa4b77-3d3f-417a-bc20-55f070b89044\" run build:desktop",
+    "start": "npm run build:renderer && node electron/launch.cjs",
+    "dist": "npm run build:renderer && electron-builder --win --x64 --publish never",
+    "pack": "npm run build:renderer && electron-builder --dir --publish never",
+    "test:desktop": "node electron/launch.cjs --smoke-test"
+  },
+  "build": {
+    "appId": "com.transferly.desktop",
+    "productName": "Transferly",
+    "directories": { "output": "release" },
+    "files": ["electron/**/*", "desktop-dist/**/*", "package.json"],
+    "asar": true,
+    "win": { "target": ["nsis", "portable"], "signAndEditExecutable": false },
+    "nsis": { "oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "artifactName": "Transferly-Setup-${version}.${ext}" },
+    "portable": { "artifactName": "Transferly-Portable-${version}.${ext}" }
+  },
+  "devDependencies": {
+    "electron": "^45.2.3",
+    "electron-builder": "^26.18.0"
+  }
+}
